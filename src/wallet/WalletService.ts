@@ -142,7 +142,7 @@ export class WalletService {
       throw new Error('Failed to derive private key');
     }
 
-    const wallet = new ethers.Wallet(child.privateKey);
+    const wallet = new ethers.Wallet('0x' + child.privateKey.toString('hex'));
 
     return {
       address: wallet.address,
