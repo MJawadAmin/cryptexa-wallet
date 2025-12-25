@@ -32,6 +32,7 @@ export interface Transaction {
   asset: string;
   timestamp: number;
   status: 'pending' | 'confirmed' | 'failed';
+  type?: 'send' | 'receive';
   gasUsed?: string;
   gasPrice?: string;
   blockNumber?: number;
@@ -125,6 +126,9 @@ export enum MessageType {
   GET_BALANCE = 'GET_BALANCE',
   SEND_TRANSACTION = 'SEND_TRANSACTION',
   GET_TRANSACTIONS = 'GET_TRANSACTIONS',
+  CREATE_ACCOUNT = 'CREATE_ACCOUNT',
+  SWITCH_ACCOUNT = 'SWITCH_ACCOUNT',
+  GET_ACCOUNTS = 'GET_ACCOUNTS',
   
   // DID operations
   CREATE_DID = 'CREATE_DID',
@@ -136,6 +140,7 @@ export enum MessageType {
   VERIFY_CREDENTIAL = 'VERIFY_CREDENTIAL',
   CREATE_PRESENTATION = 'CREATE_PRESENTATION',
   EXPORT_CREDENTIALS = 'EXPORT_CREDENTIALS',
+  IMPORT_CREDENTIALS = 'IMPORT_CREDENTIALS',
   
   // Authentication
   SIGN_MESSAGE = 'SIGN_MESSAGE',

@@ -1,17 +1,35 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cryptexa Wallet</title><style>* {
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cryptexa - Web3 Crypto Dashboard</title><style>* {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
     body {
-      width: 380px;
-      height: 600px;
+      min-width: 400px;
+      width: 100%;
+      max-width: 100vw;
+      min-height: 600px;
+      height: 100vh;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
       overflow: hidden;
+      background: #0a0a0a;
     }
 
     #root {
       width: 100%;
       height: 100%;
-    }</style><script defer="defer" src="popup.js"></script></head><body><div id="root"></div><script src="popup.js"></script></body></html>
+      overflow: hidden;
+    }
+
+    /* Responsive breakpoints */
+    @media (min-width: 768px) {
+      body {
+        width: 900px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      body {
+        width: 1200px;
+      }
+    }</style><script defer="defer" src="recharts.js"></script><script defer="defer" src="vendor.js"></script><script defer="defer" src="544.js"></script><script defer="defer" src="popup.js"></script></head><body><div id="root"></div><script src="popup.js"></script></body></html>

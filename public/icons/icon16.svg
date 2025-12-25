@@ -1,0 +1,36 @@
+
+<svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#764ba2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f093fb;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Background rounded rectangle -->
+  <rect x="0.8" y="0.8" width="14.4" height="14.4" 
+        rx="3.2" fill="url(#grad)" filter="url(#shadow)"/>
+  
+  <!-- Wallet icon -->
+  <g transform="translate(8, 8)">
+    <!-- Wallet body -->
+    <rect x="-4" y="-2.4" width="8" height="4.8" 
+          rx="0.48" fill="#ffffff" opacity="0.95"/>
+    
+    <!-- Wallet flap -->
+    <rect x="-4" y="-2.4" width="8" height="1.28" 
+          fill="#ffffff" opacity="0.7"/>
+    
+    <!-- Card slot line -->
+    <line x1="-2.4" y1="0.32" x2="2.4" y2="0.32" 
+          stroke="#667eea" stroke-width="0.24" stroke-linecap="round"/>
+    
+    <!-- Shine effect -->
+    <circle cx="-1.92" cy="-1.28" r="0.64" 
+            fill="#ffffff" opacity="0.4"/>
+  </g>
+</svg>

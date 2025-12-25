@@ -14,6 +14,12 @@ import {
  * Handles communication with background service worker
  */
 
+interface Account {
+  address: string;
+  name: string;
+  balance?: string;
+}
+
 interface WalletState {
   // Wallet state
   isLocked: boolean;
@@ -23,6 +29,8 @@ interface WalletState {
   assets: Asset[];
   transactions: Transaction[];
   network: NetworkType;
+  accounts: Account[];
+  currentAccount: Account | null;
 
   // Credentials state
   credentials: VerifiableCredential[];
@@ -40,6 +48,8 @@ interface WalletState {
   sendTransaction: (to: string, amount: string, password: string) => Promise<{ success: boolean; txHash?: string; error?: string }>;
   refreshTransactions: () => Promise<void>;
   switchNetwork: (network: NetworkType) => void;
+  switchAccount: (address: string) => Promise<void>;
+  createNewAccount: (password: string) => Promise<{ success: boolean; error?: string }>;
 
   // DID actions
   createDID: () => Promise<{ success: boolean; did?: string; error?: string }>;
@@ -90,6 +100,8 @@ export const useWalletStore = create<WalletState>((set, get) => ({
   assets: [],
   transactions: [],
   network: NetworkType.ETHEREUM_MAINNET,
+  accounts: [],
+  currentAccount: null,
   credentials: [],
   isLoading: false,
   error: null,
@@ -160,16 +172,23 @@ export const useWalletStore = create<WalletState>((set, get) => ({
   unlockWallet: async (password: string) => {
     set({ isLoading: true, error: null });
 
-    const response = await sendMessage<{ address: string; did: string }>({
+    const response = await sendMessage<{ address: string; did: string; accounts?: any[] }>({
       type: MessageType.UNLOCK_WALLET,
       payload: { password },
     });
 
     if (response.success && response.data) {
+      const accounts = response.data.accounts || [{ 
+        address: response.data.address, 
+        name: 'Account 1' 
+      }];
+      
       set({
         isLocked: false,
         address: response.data.address,
         did: response.data.did,
+        accounts: accounts,
+        currentAccount: accounts[0],
         isLoading: false,
       });
 
@@ -371,6 +390,56 @@ export const useWalletStore = create<WalletState>((set, get) => ({
         error: response.error,
       };
     }
+  },
+
+  // Switch account
+  switchAccount: async (address: string) => {
+    const response = await sendMessage<{ address: string; did: string }>({
+      type: MessageType.SWITCH_ACCOUNT,
+      payload: { address },
+    });
+
+    if (response.success && response.data) {
+      const account = get().accounts.find((a: Account) => a.address === address);
+      set({ 
+        address: response.data.address, 
+        did: response.data.did || null,
+        currentAccount: account || null,
+        balance: '0',
+        transactions: []
+      });
+      await get().refreshBalance();
+      await get().refreshTransactions();
+    }
+  },
+
+  // Create new account
+  createNewAccount: async (password: string) => {
+    const response = await sendMessage<{ address: string; name: string }>({
+      type: MessageType.CREATE_ACCOUNT,
+      payload: { password },
+    });
+
+    if (response.success && response.data) {
+      const newAccount: Account = {
+        address: response.data.address,
+        name: response.data.name,
+        balance: '0'
+      };
+      
+      const updatedAccounts = [...get().accounts, newAccount];
+      set({ 
+        accounts: updatedAccounts,
+        address: response.data.address,
+        currentAccount: newAccount,
+        balance: '0'
+      });
+      
+      await get().refreshBalance();
+      return { success: true };
+    }
+
+    return { success: false, error: response.error || 'Failed to create account' };
   },
 
   // Set error

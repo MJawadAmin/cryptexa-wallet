@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cryptexa Icon Generator</title>
+</head>
+<body>
+    <canvas id="canvas16" width="16" height="16"></canvas>
+    <canvas id="canvas32" width="32" height="32"></canvas>
+    <canvas id="canvas48" width="48" height="48"></canvas>
+    <canvas id="canvas128" width="128" height="128"></canvas>
+    
+    <script>
+        // Professional gradient icon generator for Cryptexa
+        function createIcon(canvas, size) {
+            const ctx = canvas.getContext('2d');
+            
+            // Create gradient background
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#667eea');
+            gradient.addColorStop(0.5, '#764ba2');
+            gradient.addColorStop(1, '#f093fb');
+            
+            // Draw rounded rectangle
+            const radius = size * 0.25;
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.roundRect(size * 0.1, size * 0.1, size * 0.8, size * 0.8, radius);
+            ctx.fill();
+            
+            // Draw wallet icon in white
+            ctx.strokeStyle = 'white';
+            ctx.fillStyle = 'white';
+            ctx.lineWidth = size * 0.08;
+            
+            const centerX = size / 2;
+            const centerY = size / 2;
+            const walletWidth = size * 0.5;
+            const walletHeight = size * 0.35;
+            
+            // Draw wallet body
+            ctx.beginPath();
+            ctx.roundRect(
+                centerX - walletWidth / 2,
+                centerY - walletHeight / 2,
+                walletWidth,
+                walletHeight,
+                size * 0.05
+            );
+            ctx.stroke();
+            ctx.fill();
+            
+            // Draw wallet flap
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+            ctx.beginPath();
+            ctx.rect(
+                centerX - walletWidth / 2,
+                centerY - walletHeight / 2,
+                walletWidth,
+                walletHeight * 0.3
+            );
+            ctx.fill();
+            
+            // Draw card slot
+            ctx.strokeStyle = '#667eea';
+            ctx.lineWidth = size * 0.04;
+            ctx.beginPath();
+            ctx.moveTo(centerX - walletWidth * 0.3, centerY + walletHeight * 0.1);
+            ctx.lineTo(centerX + walletWidth * 0.3, centerY + walletHeight * 0.1);
+            ctx.stroke();
+        }
+        
+        createIcon(document.getElementById('canvas16'), 16);
+        createIcon(document.getElementById('canvas32'), 32);
+        createIcon(document.getElementById('canvas48'), 48);
+        createIcon(document.getElementById('canvas128'), 128);
+        
+        // Download icons
+        ['16', '32', '48', '128'].forEach(size => {
+            const canvas = document.getElementById('canvas' + size);
+            canvas.toBlob(blob => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `icon${size}.png`;
+                a.click();
+            });
+        });
+    </script>
+</body>
+</html>

@@ -12,7 +12,9 @@ import {
   ChevronDown,
   Plus,
   Shield,
-  Zap
+  Zap,
+  TrendingUp,
+  BarChart3
 } from 'lucide-react';
 import { Button } from '../../components/Button';
 import { Card } from '../../components/Card';
@@ -172,6 +174,13 @@ export const DashboardPage: React.FC = () => {
           {/* Features Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <FeatureCard
+              icon={<TrendingUp className="w-8 h-8 text-blue-500" />}
+              title="Crypto Analytics"
+              description="AI predictions & market analysis"
+              onClick={() => chrome.tabs.create({ url: chrome.runtime.getURL('dashboard.html#/analytics') })}
+              highlight
+            />
+            <FeatureCard
               icon={<Shield className="w-8 h-8 text-primary-500" />}
               title="Cryptexa ID"
               description="Manage your decentralized identity"
@@ -279,16 +288,21 @@ const FeatureCard: React.FC<{
   title: string;
   description: string;
   onClick: () => void;
-}> = ({ icon, title, description, onClick }) => {
+  highlight?: boolean;
+}> = ({ icon, title, description, onClick, highlight }) => {
   return (
-    <Card hover onClick={onClick}>
+    <Card 
+      hover 
+      onClick={onClick}
+      className={highlight ? 'border-2 border-blue-500 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20' : ''}
+    >
       <div className="flex items-start space-x-4">
         <div>{icon}</div>
         <div>
-          <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">
+          <h3 className={`text-lg font-bold mb-1 ${highlight ? 'text-blue-900 dark:text-blue-100' : 'text-gray-900 dark:text-white'}`}>
             {title}
           </h3>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
+          <p className={`text-sm ${highlight ? 'text-blue-700 dark:text-blue-300' : 'text-gray-600 dark:text-gray-400'}`}>
             {description}
           </p>
         </div>

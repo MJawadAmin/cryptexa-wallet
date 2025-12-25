@@ -14,7 +14,10 @@ export default defineConfig({
     open: true,
   },
   build: {
-    outDir: 'dist-preview',
+    outDir: 'dist-dashboard',
     emptyOutDir: true,
+  },
+  optimizeDeps: {
+    include: ['recharts', 'ethers', 'axios', 'zustand'],
   },
 });

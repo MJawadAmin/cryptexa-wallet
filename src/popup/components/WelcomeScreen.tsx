@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Wallet, Key, Shield, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Wallet, Key, Shield, Sparkles, ArrowRight } from 'lucide-react';
 import { useWalletStore } from '@/store/wallet-store';
 import { cn } from '@/utils/cn';
+import LogoReveal from './LogoReveal';
 
 interface WelcomeScreenProps {
   onWalletCreated: () => void;
@@ -101,32 +102,88 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onWalletCreated }) => {
 
   if (mode === 'welcome') {
     return (
-      <div className="container">
-        <div className="header">
+      <motion.div 
+        className="container"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="header" style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}>
           <h1>🌟 Cryptexa Wallet</h1>
         </div>
-        <div className="content" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-          <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-            <h2 style={{ fontSize: '24px', fontWeight: '700', marginBottom: '12px' }}>
+        <div className="content" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+          {/* Animated Logo Reveal */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            style={{ marginBottom: '24px' }}
+          >
+            <LogoReveal size="lg" autoPlay={true} />
+          </motion.div>
+
+          <motion.div 
+            style={{ textAlign: 'center', marginBottom: '32px', width: '100%' }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.6 }}
+          >
+            <h2 style={{ fontSize: '24px', fontWeight: '700', marginBottom: '12px', background: 'linear-gradient(135deg, #667eea 0%, #f093fb 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
               Welcome to Cryptexa
             </h2>
-            <p style={{ fontSize: '14px', color: '#6b7280' }}>
+            <p style={{ fontSize: '14px', color: '#6b7280', marginBottom: '8px' }}>
               Your secure crypto wallet with decentralized identity
             </p>
-          </div>
+            <motion.div
+              style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginTop: '16px' }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.2, duration: 0.6 }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '12px', color: '#667eea' }}>
+                <Shield size={16} />
+                <span>Secure</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '12px', color: '#667eea' }}>
+                <Sparkles size={16} />
+                <span>DID Ready</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '12px', color: '#667eea' }}>
+                <Wallet size={16} />
+                <span>Multi-Chain</span>
+              </div>
+            </motion.div>
+          </motion.div>
 
-          <button className="button" onClick={() => setMode('create')}>
+          <motion.button 
+            className="button animate-glow" 
+            onClick={() => setMode('create')}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.4, duration: 0.6 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+          >
             Create New Wallet
-          </button>
+            <ArrowRight size={18} />
+          </motion.button>
 
-          <button
+          <motion.button
             className="button button-secondary"
             onClick={() => setMode('restore')}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.6, duration: 0.6 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
           >
+            <Key size={18} />
             Restore Existing Wallet
-          </button>
+          </motion.button>
         </div>
-      </div>
+      </motion.div>
     );
   }
 

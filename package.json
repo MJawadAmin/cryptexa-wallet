@@ -5,16 +5,19 @@
   "private": true,
   "scripts": {
     "dev": "vite",
+    "dev:dashboard": "vite",
     "dev:watch": "webpack --watch --mode development",
     "build": "webpack --mode production",
     "build:extension": "webpack --mode production",
+    "build:dashboard": "vite build",
     "preview": "vite preview",
+    "preview:dashboard": "vite preview",
     "lint": "eslint src/**/*.{ts,tsx}",
     "type-check": "tsc --noEmit",
     "start": "npm run dev"
   },
   "dependencies": {
-    "axios": "^1.6.2",
+    "axios": "^1.13.2",
     "bip39": "^3.1.0",
     "clsx": "^2.0.0",
     "crypto-js": "^4.2.0",
@@ -25,10 +28,12 @@
     "ethr-did-resolver": "^10.1.5",
     "framer-motion": "^10.18.0",
     "hdkey": "^2.1.0",
+    "lightweight-charts": "^5.1.0",
     "lucide-react": "^0.294.0",
     "qrcode.react": "^3.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "recharts": "^3.6.0",
     "tailwind-merge": "^2.2.0",
     "vm-browserify": "^1.1.2",
     "zustand": "^4.4.7"

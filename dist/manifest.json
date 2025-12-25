@@ -1,22 +1,37 @@
 {
   "manifest_version": 3,
-  "name": "Cryptexa Wallet",
+  "name": "Cryptexa - Crypto Trading Dashboard",
   "version": "1.0.0",
-  "description": "Secure non-custodial crypto wallet with decentralized identity (DID) management",
+  "description": "Professional crypto trading dashboard with live market data, AI predictions, and Web3 wallet integration",
   "permissions": [
     "storage",
     "alarms",
     "activeTab"
   ],
   "host_permissions": [
-    "https://*/*"
+    "https://*/*",
+    "https://api.coingecko.com/*"
   ],
   "background": {
     "service_worker": "background.js",
     "type": "module"
   },
   "action": {
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+    "default_title": "Cryptexa - Crypto Trading Dashboard",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_page": "options.html",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
   },
   "content_scripts": [
     {
@@ -27,11 +42,11 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["provider.js"],
+      "resources": ["provider.js", "icons/*.png"],
       "matches": ["<all_urls>"]
     }
   ],
   "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'"
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' https://api.coingecko.com https://*.coingecko.com"
   }
 }
